@@ -42,7 +42,7 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
         totalAmount += thisAmount
     }
 
-    result += "Amount owed is \(totalAmount / 100)\n"
+    result += "Amount owed is $\(totalAmount / 100)\n"
     result += "You earned \(volumeCredits) credits\n"
     return result
 }
