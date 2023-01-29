@@ -47,7 +47,28 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     return result
 }
 
-let result = statement(invoice: invoices, plays: plays)
+class StatementTests: XCTestCase {
 
-print(result)
+    func test_sample_case() {
+        XCTAssertEqual("1", "12")
+    }
+
+    private let anyResult =
+    """
+    Statement for BigCo
+     Hamlet: $650 (55 seats)
+     As You Like It: $580 (35 seats)
+     Othello: $500 (40 seats)
+    Amount owed is $1730
+    You earned 47 credits
+    """
+}
+
+
+
+let testObserver = TestObserver()
+XCTestObservationCenter.shared.addTestObserver(testObserver)
+StatementTests.defaultTestSuite.run()
+
+
 
