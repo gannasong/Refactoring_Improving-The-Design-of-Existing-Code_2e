@@ -1,19 +1,19 @@
 import Foundation
 
 public struct Invoice {
-    let customer: String
-    let performances: [Performance]
+    public let customer: String
+    public let performances: [Performance]
 }
 
 public struct Performance {
-    let playID: String
-    let audience: Int
+    public let playID: String
+    public let audience: Int
 }
 
 let performances: [Performance] = [
     .init(playID: "hamlet", audience: 55),
     .init(playID: "as-like", audience: 35),
-    .init(playID: "othello", audience: 45)
+    .init(playID: "othello", audience: 40)
 
 ]
 
