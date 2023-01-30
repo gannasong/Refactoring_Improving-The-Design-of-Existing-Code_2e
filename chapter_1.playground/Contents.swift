@@ -32,27 +32,25 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
 
 // 106
 func amountFor(_ perf: Performance, _ play: Play) -> Int {
-    var thisAmount = 0
+    var result = 0
 
     switch play.type {
         case "tragedy":
-            thisAmount = 40000
+            result = 40000
             if perf.audience > 30 {
-                thisAmount += 1000 * (perf.audience - 30)
+                result += 1000 * (perf.audience - 30)
             }
-            break
         case "comedy":
-            thisAmount = 30000
+            result = 30000
             if perf.audience > 20 {
-                thisAmount += 10000 + 500 * (perf.audience - 20)
+                result += 10000 + 500 * (perf.audience - 20)
             }
-            thisAmount += 300 * perf.audience
-            break
+            result += 300 * perf.audience
         default:
             fatalError("unknown type: \(play.type)")
     }
 
-    return thisAmount
+    return result
 }
 
 // Test
