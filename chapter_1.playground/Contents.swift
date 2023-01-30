@@ -1,23 +1,29 @@
 import Foundation
 import XCTest
 
+let plays: [String: Play] = [
+    "hamlet": Play(name: "Hamlet", type: "tragedy"),
+    "as-like": Play(name: "As You Like It", type: "comedy"),
+    "othello": Play(name: "Othello", type: "tragedy")
+]
+
 func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var totalAmount = 0
     var volumeCredits = 0
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        var thisAmount = amountFor(perf, playFor(perf, plays))
+        var thisAmount = amountFor(perf, playFor(perf))
 
         // add volume credits
         volumeCredits += max(perf.audience - 30, 0)
         // add extra credit for every ten comedy attendees
-        if "comedy" == playFor(perf, plays).type {
+        if "comedy" == playFor(perf).type {
             volumeCredits += perf.audience / 5
         }
 
         // print line for this order
-        result += " \(playFor(perf, plays).name): $\(thisAmount / 100) (\(perf.audience) seats)\n"
+        result += " \(playFor(perf).name): $\(thisAmount / 100) (\(perf.audience) seats)\n"
         totalAmount += thisAmount
     }
 
@@ -50,7 +56,7 @@ func amountFor(_ aPerformance: Performance, _ play: Play) -> Int {
 }
 
 // [123]
-func playFor(_ aPerformance: Performance, _ plays: [String: Play]) -> Play {
+func playFor(_ aPerformance: Performance) -> Play {
     return plays[aPerformance.playID]!
 }
 
