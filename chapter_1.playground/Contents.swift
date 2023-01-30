@@ -13,7 +13,7 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        var thisAmount = amountFor(perf, playFor(perf))
+        var thisAmount = amountFor(perf)
 
         // add volume credits
         volumeCredits += max(perf.audience - 30, 0)
@@ -33,10 +33,10 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
 }
 
 // [106]
-func amountFor(_ aPerformance: Performance, _ play: Play) -> Int {
+func amountFor(_ aPerformance: Performance) -> Int {
     var result = 0
 
-    switch play.type {
+    switch playFor(aPerformance).type {
         case "tragedy":
             result = 40000
             if aPerformance.audience > 30 {
@@ -49,7 +49,7 @@ func amountFor(_ aPerformance: Performance, _ play: Play) -> Int {
             }
             result += 300 * aPerformance.audience
         default:
-            fatalError("unknown type: \(play.type)")
+            fatalError("unknown type: \(playFor(aPerformance).type)")
     }
 
     return result
