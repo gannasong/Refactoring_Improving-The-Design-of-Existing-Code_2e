@@ -16,13 +16,17 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
         volumeCredits += volumeCreditsFor(perf)
 
         // print line for this order
-        result += " \(playFor(perf).name): $\(amountFor(perf) / 100) (\(perf.audience) seats)\n"
+        result += " \(playFor(perf).name): $\(usd(amountFor(perf))) (\(perf.audience) seats)\n"
         totalAmount += amountFor(perf)
     }
 
     result += "Amount owed is $\(totalAmount / 100)\n"
     result += "You earned \(volumeCredits) credits"
     return result
+}
+
+func usd(_ aNumber: Int) -> Int {
+    return aNumber / 100
 }
 
 func volumeCreditsFor(_ aPerformance: Performance) -> Int {
