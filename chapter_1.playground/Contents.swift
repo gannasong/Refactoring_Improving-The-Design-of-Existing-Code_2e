@@ -7,18 +7,17 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        let play = playFor(perf, plays)
-        var thisAmount = amountFor(perf, play)
+        var thisAmount = amountFor(perf, playFor(perf, plays))
 
         // add volume credits
         volumeCredits += max(perf.audience - 30, 0)
         // add extra credit for every ten comedy attendees
-        if "comedy" == play.type {
+        if "comedy" == playFor(perf, plays).type {
             volumeCredits += perf.audience / 5
         }
 
         // print line for this order
-        result += " \(play.name): $\(thisAmount / 100) (\(perf.audience) seats)\n"
+        result += " \(playFor(perf, plays).name): $\(thisAmount / 100) (\(perf.audience) seats)\n"
         totalAmount += thisAmount
     }
 
