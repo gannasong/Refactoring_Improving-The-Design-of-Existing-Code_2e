@@ -13,12 +13,7 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        // add volume credits
-        volumeCredits += max(perf.audience - 30, 0)
-        // add extra credit for every ten comedy attendees
-        if "comedy" == playFor(perf).type {
-            volumeCredits += perf.audience / 5
-        }
+        volumeCredits += volumeCreditsFor(perf)
 
         // print line for this order
         result += " \(playFor(perf).name): $\(amountFor(perf) / 100) (\(perf.audience) seats)\n"
@@ -28,6 +23,17 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     result += "Amount owed is $\(totalAmount / 100)\n"
     result += "You earned \(volumeCredits) credits"
     return result
+}
+
+func volumeCreditsFor(_ perf: Performance) -> Int {
+    var volumeCredits = 0
+    volumeCredits += max(perf.audience - 30, 0)
+
+    if "comedy" == playFor(perf).type {
+        volumeCredits += perf.audience / 5
+    }
+
+    return volumeCredits
 }
 
 // [106]
