@@ -1,15 +1,21 @@
 import Foundation
 import XCTest
 
+// Sample Plays Data
 let plays: [String: Play] = [
     "hamlet": Play(name: "Hamlet", type: "tragedy"),
     "as-like": Play(name: "As You Like It", type: "comedy"),
     "othello": Play(name: "Othello", type: "tragedy")
 ]
 
+// Main Function
 func statement(invoice: Invoice, plays: [String: Play]) -> String {
-    var result = "Statement for \(invoice.customer)\n"
+    return renderPlainText(invoice, plays)
+}
 
+// Helpers
+func renderPlainText(_ invoice: Invoice, _ plays: [String: Play]) -> String {
+    var result = "Statement for \(invoice.customer)\n"
     for perf in invoice.performances {
         result += " \(playFor(perf).name): $\(usd(amountFor(perf))) (\(perf.audience) seats)\n"
     }
@@ -52,7 +58,6 @@ func volumeCreditsFor(_ aPerformance: Performance) -> Int {
     return result
 }
 
-// [106]
 func amountFor(_ aPerformance: Performance) -> Int {
     var result = 0
 
@@ -75,7 +80,6 @@ func amountFor(_ aPerformance: Performance) -> Int {
     return result
 }
 
-// [123]
 func playFor(_ aPerformance: Performance) -> Play {
     return plays[aPerformance.playID]!
 }
