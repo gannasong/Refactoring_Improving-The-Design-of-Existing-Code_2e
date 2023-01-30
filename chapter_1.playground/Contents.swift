@@ -7,10 +7,7 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        guard let play = plays[perf.playID] else {
-            fatalError("Not to found play.")
-        }
-
+        let play = playFor(perf, plays)
         var thisAmount = amountFor(perf, play)
 
         // add volume credits
@@ -30,7 +27,7 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     return result
 }
 
-// 106
+// [106]
 func amountFor(_ aPerformance: Performance, _ play: Play) -> Int {
     var result = 0
 
@@ -51,6 +48,11 @@ func amountFor(_ aPerformance: Performance, _ play: Play) -> Int {
     }
 
     return result
+}
+
+// [123]
+func playFor(_ aPerformance: Performance, _ plays: [String: Play]) -> Play {
+    return plays[aPerformance.playID]!
 }
 
 // Test
