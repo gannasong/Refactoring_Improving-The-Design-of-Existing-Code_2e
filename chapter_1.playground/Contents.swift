@@ -13,8 +13,6 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
-        var thisAmount = amountFor(perf)
-
         // add volume credits
         volumeCredits += max(perf.audience - 30, 0)
         // add extra credit for every ten comedy attendees
@@ -23,8 +21,8 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
         }
 
         // print line for this order
-        result += " \(playFor(perf).name): $\(thisAmount / 100) (\(perf.audience) seats)\n"
-        totalAmount += thisAmount
+        result += " \(playFor(perf).name): $\(amountFor(perf) / 100) (\(perf.audience) seats)\n"
+        totalAmount += amountFor(perf)
     }
 
     result += "Amount owed is $\(totalAmount / 100)\n"
