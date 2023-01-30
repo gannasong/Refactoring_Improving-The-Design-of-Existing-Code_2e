@@ -9,7 +9,6 @@ let plays: [String: Play] = [
 
 func statement(invoice: Invoice, plays: [String: Play]) -> String {
     var totalAmount = 0
-    var volumeCredits = 0
     var result = "Statement for \(invoice.customer)\n"
 
     for perf in invoice.performances {
@@ -18,12 +17,17 @@ func statement(invoice: Invoice, plays: [String: Play]) -> String {
         totalAmount += amountFor(perf)
     }
 
+    result += "Amount owed is $\(totalAmount / 100)\n"
+    result += "You earned \(totalVolumeCredits(invoice)) credits"
+    return result
+}
+
+func totalVolumeCredits(_ invoice: Invoice) -> Int {
+    var result = 0
     for perf in invoice.performances {
-        volumeCredits += volumeCreditsFor(perf)
+        result += volumeCreditsFor(perf)
     }
 
-    result += "Amount owed is $\(totalAmount / 100)\n"
-    result += "You earned \(volumeCredits) credits"
     return result
 }
 
